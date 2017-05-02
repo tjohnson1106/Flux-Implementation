@@ -10,35 +10,58 @@ import {
 } from 'react-native';
 
 import { increment, decrement, zero, } from './src/actions';
+import TallyStore from './src/TallyStore';
+
+constructor(props) {
+  super(props);
+  this.state = {
+    tally: TallyStore.getTally()
+  };
+  this.updateState = this.updateState.bind(this);
+}
+
+componentDidMount() {
+  TallyStore.addChangeListener(this.updateState);
+}
+
+componentWillUnmount () {
+  TallyStore.removeChangeListener(this.updateState);
+}
+
+updateState() {
+  this.setState({
+    tally: TallyStore.getTally()
+  });
+}
 
 class Countly extends Component {
 
   render() {
     return (
-    <View style={styles.container}>
-      <Text style={styles.appName}>
-        Countly
+      <View style={styles.container}>
+        <Text style={styles.appName}>
+          Countly
 </Text>
-      <Text style={styles.tally}>
-        Tally: 0
+        <Text style={styles.tally}>
+          Tally: {this.state.tally.count}
 </Text>
-      <TouchableOpacity onPress={increment} style={styles.button}>
-        <Text style={styles.buttonText}>
-          +
+        <TouchableOpacity onPress={increment} style={styles.button}>
+          <Text style={styles.buttonText}>
+            +
 </Text>
-      </TouchableOpacity>
-      <TouchableOpacity onPress={decrement} style={styles.button}>
-        <Text style={styles.buttonText}>
-          -
+        </TouchableOpacity>
+        <TouchableOpacity onPress={decrement} style={styles.button}>
+          <Text style={styles.buttonText}>
+            -
 </Text>
-      </TouchableOpacity>
-      <TouchableOpacity onPress={zero} style={styles.button}>
-        <Text style={styles.buttonText}>
-          0
+        </TouchableOpacity>
+        <TouchableOpacity onPress={zero} style={styles.button}>
+          <Text style={styles.buttonText}>
+            0
 </Text>
-      </TouchableOpacity>
-    </View>
-);
+        </TouchableOpacity>
+      </View>
+    );
   }
 }
 const styles = StyleSheet.create({
@@ -58,17 +81,17 @@ const styles = StyleSheet.create({
     color: '#333333',
     marginBottom: 5,
   },
-    button: {
-      backgroundColor: 'blue',
-      width: 100,
-      marginBottom: 20,
-      padding: 20
-    },
-    buttonText: {
-      color: 'white',
-      textAlign: 'center',
-      fontSize: 20
-    },
-  });
+  button: {
+    backgroundColor: 'blue',
+    width: 100,
+    marginBottom: 20,
+    padding: 20
+  },
+  buttonText: {
+    color: 'white',
+    textAlign: 'center',
+    fontSize: 20
+  },
+});
 
 AppRegistry.registerComponent('Countly', () => Countly);

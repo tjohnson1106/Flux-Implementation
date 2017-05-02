@@ -1,3 +1,6 @@
+import EventEmitter from 'EventEmitter'
+import Dispatcher from './Dispatcher';
+
 let tally = 0;
 
 vart tally = {
@@ -16,9 +19,12 @@ const zero = () => {
     tally.count = 0;
 };
 
-class TallyStore {
+class TallyStore extends EventEmitter {
     getTally() {
         return Object.assign({}, tally);
+    }
+    addChangeListener(callback) {
+        this.addChangeListener('CHANGE', callback);
     }
 }
 
@@ -36,7 +42,10 @@ const handleAction = (action) => {
         default:
         // do nothing
     }
+    instance.emitChange();
 };
+
+Dispatcher.register(handleAction);
 
 
 
