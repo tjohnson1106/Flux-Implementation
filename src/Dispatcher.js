@@ -2,6 +2,7 @@ class Dispatcher {
 
     constructor () {
         this.isDispatching = false;
+        this.actionHandlers = [];
     }
 
     dispatch(action) {
@@ -14,6 +15,10 @@ class Dispatcher {
         //TODO: Pass to Stores
         this.isDispatching = false;
     }
+}
+
+register(actionHandler) {
+this.actionHandlers.push(actionHandler);
 }
 
 export default new Dispatcher();
