@@ -1,8 +1,4 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- * @flow
- */
+
 
 import React, { Component } from 'react';
 import {
@@ -13,8 +9,12 @@ import {
   TouchableOpacity
 } from 'react-native';
 
+import { increment, decrement, zero, } from './src/actions';
+
 class Countly extends Component {
+
   render() {
+    return (
     <View style={styles.container}>
       <Text style={styles.appName}>
         Countly
@@ -22,17 +22,17 @@ class Countly extends Component {
       <Text style={styles.tally}>
         Tally: 0
 </Text>
-      <TouchableOpacity style={styles.button}>
+      <TouchableOpacity onPress={increment} style={styles.button}>
         <Text style={styles.buttonText}>
           +
 </Text>
       </TouchableOpacity>
-      <TouchableOpacity style={styles.button}>
+      <TouchableOpacity onPress={decrement} style={styles.button}>
         <Text style={styles.buttonText}>
           -
 </Text>
       </TouchableOpacity>
-      <TouchableOpacity style={styles.button}>
+      <TouchableOpacity onPress={zero} style={styles.button}>
         <Text style={styles.buttonText}>
           0
 </Text>
